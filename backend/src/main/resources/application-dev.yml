@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      max-lifetime: 60000
+      idle-timeout: 30000
+      connection-timeout: 30000
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+application:
+  security:
+    jwt:
+      access-token-expiration: 900000 # Access token expires in 15 minutes
+      refresh-token-expiration: 604800000 # Refresh token expires in 7 days
+      secret-key: ${SERVER_SECRET}
