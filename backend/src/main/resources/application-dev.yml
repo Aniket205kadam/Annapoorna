@@ -1,15 +1,15 @@
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/annapoorna
+    username: postgres
+    password: postgres-password
     driver-class-name: org.postgresql.Driver
     hikari:
       max-lifetime: 60000
       idle-timeout: 30000
       connection-timeout: 30000
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: update
     properties:
@@ -17,10 +17,30 @@ spring:
         format_sql: true
     database: POSTGRESQL
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: localhost
+    port: 1025
+    username: annapoorna.com
+    password: annapoorna-password
+    properties:
+      smtp:
+        trust: "*"
+      auth: true
+      starttls:
+        enable: true
+      connectiontimeout: 5000
+      timeout: 3000
+      writetimeout: 5000
 
 application:
   security:
     jwt:
       access-token-expiration: 900000 # Access token expires in 15 minutes
       refresh-token-expiration: 604800000 # Refresh token expires in 7 days
-      secret-key: ${SERVER_SECRET}
+      secret-key: dEHmGxg1Pd1xvTNdD2UBLQpYhc4FncMG5D-6qmTY6re0ZVgdPF4RN1xN9NEm5NtE0VWkbafCNdRJTN0FWbVDcg==
+  client:
+    user-frontend-url: ${USER_FRONTEND_URL}
+    admin-frontend_url: ${ADMIN_FRONTEND_URL}
+  mail:
+    from: noreply@annapoorna.com
+    reply-to: support@annapoorna.com

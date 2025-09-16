@@ -30,6 +30,6 @@ public class RegistrationRequest {
             message = "Password must contain at least one uppercase letter, one lowercase letter, and one number"
     )
     private String password;
-    @NotBlank(message = "Role is mandatory")
+    @NotNull(message = "Role is mandatory")
     private RoleName role;
 }

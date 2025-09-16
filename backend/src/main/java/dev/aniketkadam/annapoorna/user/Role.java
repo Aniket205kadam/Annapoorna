@@ -3,12 +3,13 @@ package dev.aniketkadam.annapoorna.user;
 import dev.aniketkadam.annapoorna.common.BaseAuditingEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Entity
 @Table(name = "roles")
 public class Role extends BaseAuditingEntity {

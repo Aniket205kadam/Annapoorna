@@ -23,7 +23,7 @@ public class JwtService {
     @Value("${application.security.jwt.access-token-expiration}")
     private Long accessTokenExpiration;
     @Value("${application.security.jwt.secret-key}")
-    private String secreteKey;
+    private String secretKey;
 
     public String generateAccessToken(Map<String, Object> claims, UserDetails userDetails) {
         return buildToken(claims, userDetails, accessTokenExpiration);
@@ -49,7 +49,7 @@ public class JwtService {
     }
 
     private Key getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secreteKey);
+        byte[] keyBytes = Decoders.BASE64URL.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -79,7 +79,7 @@ public class JwtService {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignKey())
                 .build()
-                .parseClaimsJwt(jwtToken)
+                .parseClaimsJws(jwtToken)
                 .getBody();
     }
 }

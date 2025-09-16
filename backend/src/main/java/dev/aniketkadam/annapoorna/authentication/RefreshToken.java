@@ -14,6 +14,7 @@ import lombok.*;
 public class RefreshToken {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     @Column(length = 800, nullable = false, updatable = false)
     private String token;
@@ -22,6 +23,6 @@ public class RefreshToken {
     private Boolean isExpired;
 
     @ManyToOne
-    @Column(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

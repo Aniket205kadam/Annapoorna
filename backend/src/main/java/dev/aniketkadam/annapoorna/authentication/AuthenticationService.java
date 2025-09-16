@@ -7,6 +7,7 @@ import dev.aniketkadam.annapoorna.exception.OperationNotPermittedException;
 import dev.aniketkadam.annapoorna.exception.RefreshTokenException;
 import dev.aniketkadam.annapoorna.security.JwtService;
 import dev.aniketkadam.annapoorna.user.*;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -20,7 +21,9 @@ import org.springframework.stereotype.Service;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,11 +39,19 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     @Transactional
-    public AuthenticationResponse register(RegistrationRequest registrationRequest, HttpServletRequest httpRequest) {
-        Role role = roleRepository.findByRoleName(registrationRequest.getRole())
+    public AuthenticationResponse register(RegistrationRequest registrationRequest, HttpServletRequest httpRequest) throws OperationNotPermittedException {
+        Role role = roleRepository.findByName(registrationRequest.getRole())
                 .orElseGet(() -> roleRepository.save(Role.builder()
                         .name(registrationRequest.getRole())
                         .build()));
+
+        // first check email is verified
+        Optional<VerificationCode> verificationCodes = verificationCodeRepository.findTopByEmailOrderByCreatedAtDesc(registrationRequest.getEmail());
+        if (verificationCodes.isEmpty() || verificationCodes.get().getValidatedAt() == null) {
+            throw new OperationNotPermittedException("Please verify your email before signing up.");
+        }
+
+        // save user
         User user = User.builder()
                 .firstname(registrationRequest.getFirstname())
                 .lastname(registrationRequest.getLastname())
@@ -48,6 +59,7 @@ public class AuthenticationService {
                 .phone(registrationRequest.getPhone())
                 .password(passwordEncoder.encode(registrationRequest.getPassword()))
                 .role(role)
+                .enabled(true)
                 .build();
         User savedUser = userRepository.save(user);
 
@@ -80,12 +92,12 @@ public class AuthenticationService {
         return userAgent + " | IP: " + ipAddress;
     }
 
-    public void sendVerificationCodeOnEmail(@NotNull String email) {
+    public void sendVerificationCodeOnEmail(@NotNull String email) throws MessagingException {
         String newToken = generateAndSaveActivationToken(email);
         // send email
         emailService.sendEmail(EmailVerificationRequest.builder()
                         .to(email)
-                        .emailTemplate(EmailTemplateName.ACTIVATE_ACCOUNT)
+                        .emailTemplate(EmailTemplateName.EMAIL_VERIFICATION)
                         .verificationCode(newToken)
                         .subject("Account activation")
                         .build());
@@ -114,7 +126,7 @@ public class AuthenticationService {
     }
 
     @Transactional
-    public Boolean emailVerification(String email, String code) throws OperationNotPermittedException {
+    public Boolean emailVerification(String email, String code) throws OperationNotPermittedException, MessagingException {
         VerificationCode verificationCode = verificationCodeRepository.findByEmailAndCode(email, code)
                 .orElseThrow(() -> new EntityNotFoundException("Verification code is not found with code and email!"));
         if (verificationCode.getExpiresAt().isBefore(LocalDateTime.now())) {
@@ -137,7 +149,7 @@ public class AuthenticationService {
                 .orElseThrow(() -> new RefreshTokenException("Refresh token not found or invalid."));
         User currentUser = refreshToken.getUser();
         // check if refresh token is expired or revoked
-        if (refreshToken.getRevoked() || refreshToken.getIsExpired() || jwtService.isValidToken(refreshToken.getToken(), currentUser)) {
+        if (refreshToken.getRevoked() || refreshToken.getIsExpired() || !jwtService.isValidToken(refreshToken.getToken(), currentUser)) {
             // mark refresh token as expired
             refreshToken.setRevoked(true);
             refreshToken.setIsExpired(true);
@@ -161,7 +173,7 @@ public class AuthenticationService {
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest, HttpServletRequest httpRequest) {
         User currentUser = userRepository.findByEmail(authenticationRequest.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + authenticationRequest.getEmail()));
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(currentUser.getEmail(), authenticationRequest.getEmail()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(currentUser.getEmail(), authenticationRequest.getPassword()));
 
         // After authentication generate Refresh-token & Access-token
         Map<String, Object> claims = new HashMap<>();

@@ -2,6 +2,7 @@ package dev.aniketkadam.annapoorna.authentication;
 
 import dev.aniketkadam.annapoorna.exception.OperationNotPermittedException;
 import dev.aniketkadam.annapoorna.exception.RefreshTokenException;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody @Valid RegistrationRequest registrationRequest,
             HttpServletRequest httpRequest
-    ) {
+    ) throws OperationNotPermittedException {
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
                 .body(service.register(registrationRequest, httpRequest));
@@ -31,7 +32,7 @@ public class AuthenticationController {
     @PatchMapping("/verification/{email}")
     public ResponseEntity<Void> sendVerificationCode(
             @PathVariable("email") String email
-    ) {
+    ) throws MessagingException {
         service.sendVerificationCodeOnEmail(email);
         return ResponseEntity.ok().build();
     }
@@ -40,7 +41,7 @@ public class AuthenticationController {
     public ResponseEntity<Boolean> validateVerificationCode(
             @PathVariable("email") String email,
             @PathVariable("verification-code") String verificationCode
-    ) throws OperationNotPermittedException {
+    ) throws OperationNotPermittedException, MessagingException {
         return ResponseEntity
                 .ok(service.emailVerification(email, verificationCode));
     }

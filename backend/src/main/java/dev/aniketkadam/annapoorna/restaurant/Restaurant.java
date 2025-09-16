@@ -46,5 +46,6 @@ public class Restaurant extends BaseAuditingEntity {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner; // seller who own this restaurant
 
+    @OneToMany(mappedBy = "restaurant")
     private List<FoodItem> menu = new ArrayList<>();
 }

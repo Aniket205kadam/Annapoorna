@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: postgres-sql
+    container_name: annapoorna-postgres-sql
     hostname: postgres-sql
     image: postgres
     environment:
