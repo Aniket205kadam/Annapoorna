@@ -1,0 +1,374 @@
+.signup-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: -1;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.signup-content {
+  background-color: #fffffff2;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  margin: 2rem 0;
+}
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+  border-radius: 300px;
+  margin-bottom: 0.5rem;
+}
+
+.tagline {
+  color: #555;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  background-color: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #e23744;
+  box-shadow: 0 0 0 2px rgba(226, 55, 68, 0.1);
+}
+
+.input-with-button {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-with-button input {
+  flex: 1;
+}
+
+.mobile-input-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.country-code {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 12px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  min-width: 90px;
+}
+
+.country-code .flag {
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+}
+
+.mobile-input-container input {
+  flex: 1;
+}
+
+.verify-btn {
+  background-color: #e23744;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0 15px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s;
+}
+
+.verified-btn {
+    background-color: #52a854;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0 15px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+}
+
+.verify-btn:hover {
+  background-color: #c62b38;
+}
+
+.password {
+    width: 93%;
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #777;
+  cursor: pointer;
+}
+
+.password-rules {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  border-left: 3px solid #e23744;
+}
+
+.password-rules p {
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.password-rules ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+}
+
+.password-rules li {
+  margin-bottom: 0.2rem;
+  color: #555;
+}
+
+.signup-button {
+  background-color: #e23744;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 0.5rem;
+}
+
+.signup-button:hover {
+  background-color: #c62b38;
+}
+
+.oauth-section {
+  margin-bottom: 1.5rem;
+}
+
+.login-redirect {
+  text-align: center;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.login-link {
+  background: none;
+  border: none;
+  color: #e23744;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.customize-option {
+  height: 100%;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.customize-option-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.customize-option span {
+  position: absolute;
+  width: fit-content;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  background: #00000080;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.btn-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;  
+  margin-top: 1rem; 
+}
+
+.back-btn {
+    width: fit-content;
+    background-color: #5092fc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+  }
+
+  .btn {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .continue-btn {
+    width: fit-content;
+    background-color: #28A745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+  }
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .signup-content {
+    background-color: #ffffffB3;
+    padding: 1.5rem;
+    width: 100vw;
+    height: 100vh;
+    margin: 0 0;
+    margin: 0 0;
+    border-radius: 0;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  .tagline {
+    color: #0e0d0d;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .country-code {
+    display: none;
+  }
+  
+  .verify-btn {
+    padding: 10px;
+  }
+
+  .verify-btn {
+    background-color: #e23744;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: fit-content;
+    padding: 0 15px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-content {
+    padding: 1rem;
+  }
+  
+  .logo {
+    width: 80px;
+    height: auto;
+  }
+  
+  .tagline {
+    font-size: 0.8rem;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .verify-btn,
+  .signup-button {
+    padding: 10px;
+  }
+}

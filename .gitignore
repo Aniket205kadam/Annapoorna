@@ -1,0 +1,7 @@
+.idea/
+frontend/.env
+backend/.env
+frontend/node_modules
+frontend/src/assets/Annapoorna-logo.png
+frontend/src/assets/intro.mp4
+backend/src/main/resources/static/images/Annapoorna-logo.jpg

@@ -1,0 +1,47 @@
+.btn-loader {
+ width: 30px;
+ transform-origin: center;
+ animation: rotate4 2s linear infinite;
+}
+
+.btn-circle {
+ fill: none;
+ stroke-width: 4;
+ stroke-dasharray: 1, 200;
+ stroke-dashoffset: 0;
+ stroke-linecap: round;
+ animation: dash4 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate4 {
+ 100% {
+  transform: rotate(360deg);
+ }
+}
+
+@keyframes dash4 {
+ 0% {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+ }
+
+ 50% {
+  stroke-dasharray: 90, 200;
+  stroke-dashoffset: -35px;
+ }
+
+ 100% {
+  stroke-dashoffset: -125px;
+ }
+}
+
+@media (max-width: 768px) {
+
+    .btn-loader {
+        width: 30px;
+        height: 20px;
+        transform-origin: center;
+        animation: rotate4 2s linear infinite;
+    }
+
+}
